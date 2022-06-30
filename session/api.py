@@ -43,7 +43,7 @@ def insert_session(request):
 @api_view(['GET'])
 def getVolunteerRequests(request):
     if request.user.is_authenticated:
-        requestV = VolunteerRequest.objects.filter(organization=request.user)
+        requestV = VolunteerRequest.objects.filter(organization=request.user).filter(status = 0)
         request_serializer = VolunteerRequestSerializer(requestV, many=True)
         return Response(request_serializer.data, status=status.HTTP_200_OK)
     return Response({"message": "Primero debe iniciar sesion"}, status=status.HTTP_400_BAD_REQUEST)
